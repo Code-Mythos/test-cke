@@ -22,18 +22,28 @@ function App() {
           if (editable && parent && toolbar)
             parent.insertBefore(toolbar, editable);
         }}
-        onFocus={(event, editor) => {
-          console.log("On focus editor content:\n", event);
-        }}
-        onBlur={(event, editor) => {
-          console.log("On blur editor content:\n", event);
-        }}
-        onError={(event, editor) => {
-          console.log("On error editor content:\n", event);
-        }}
         onChange={(event, editor) => {
-          console.log("On change editor content:\n", event);
+          const data = editor.getData();
+          console.log("On change editor content:\n", event, "\n", data);
           setText(editor.getData());
+        }}
+        config={{
+          wproofreader: {
+            serviceId: "your_service_id",
+            srcUrl:
+              "https://svc.webspellchecker.net/spellcheck31/wscbundle/wscbundle.js",
+            autoSearch: true,
+            enableGrammar: true,
+            lang: "en_US",
+          },
+
+          ai: {
+            openAI: {
+              requestHeaders: {
+                Authorization: "Bearer YOUR_OPENAI_API_KEY",
+              },
+            },
+          },
         }}
       />
     </div>

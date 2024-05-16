@@ -23,10 +23,18 @@ watchdog.setDestructor( editor => {
 
 watchdog.on( 'error', handleSampleError );
 
-watchdog
-	.create( document.querySelector( '.editor' ), {
-		// Editor configuration.
-	} )
+createDialog().then( config => watchdog.create(
+	document.querySelector( '.editor' ), {
+		licenseKey: config.licenseKey,
+		documentOutline: {
+			container: document.querySelector( '.document-outline-container' )
+		},
+		wproofreader: {
+			serviceId: config.wproofreaderServiceId,
+			srcUrl: 'https://svc.webspellchecker.net/spellcheck31/wscbundle/wscbundle.js'
+		}
+	}
+) )
 	.catch( handleSampleError );
 
 function handleSampleError( error ) {
@@ -34,7 +42,7 @@ function handleSampleError( error ) {
 
 	const message = [
 		'Oops, something went wrong!',
-		`Please, report the following error on ${ issueUrl } with the build id "4bxerdhcbc0x-i30mljhx3y4j" and the error stack trace:`
+		`Please, report the following error on ${ issueUrl } with the build id "ua59sqbwjpxn-jiee7g7althd" and the error stack trace:`
 	].join( '\n' );
 
 	console.error( message );
